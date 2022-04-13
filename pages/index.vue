@@ -1,13 +1,18 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 let page = ref(1);
-const { data } = await useFetch(() => `posts?_page=${page.value}&take=9&_embed=comments`, { baseURL: config.API_URL });
+let posts = useState('posts');
+
+const { data } = await useFetch(() => `posts?_page=${page.value}&_limit=9&_embed=comments`, { baseURL: config.API_URL });
+posts.value = data;
+
 </script>
 
 <template>
-  <PostGrid v-if="data">
-    <Post v-for="post in data" :post="post" />
-  </PostGrid>
+  <NuxtLayout name="index">
+    <PostGrid v-if="posts">
+      <Post v-for="post in posts" :post="post" />
+    </PostGrid>
+  </NuxtLayout>
 </template>
-
 
