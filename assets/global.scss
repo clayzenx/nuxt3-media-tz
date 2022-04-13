@@ -1,5 +1,9 @@
 @use 'var';
 
+* {
+  margin: 0;
+  padding: 0;
+}
 body {
   background-color: var.$white;
   font: var.$text;
