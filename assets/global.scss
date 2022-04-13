@@ -1,0 +1,7 @@
+@use 'var';
+
+body {
+  background-color: var.$white;
+  font: var.$text;
+  color: var.$grey-60
+}
