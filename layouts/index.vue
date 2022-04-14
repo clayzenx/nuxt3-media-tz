@@ -6,10 +6,17 @@
 </template>
 
 <style lang="scss">
-$wrapper-width: 973px;
+@use "@/assets/var";
 
 .wrapper {
-  width: $wrapper-width;
+  max-width: var.$desktop-width;
   margin: 0 auto;
+  padding: 10px;
+
+  @media screen and (min-width: var.$tablet-width) {}
+
+  @media screen and (min-width: var.$desktop-width) {
+    padding: 0px;
+  }
 }
 </style>

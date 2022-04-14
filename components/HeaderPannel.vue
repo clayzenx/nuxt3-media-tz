@@ -46,6 +46,10 @@ const search = (e: InputEvent) => {
   &__actions {
     display: flex;
 
+    @media screen and (max-width: var.$tablet-width) {
+      display: none;
+    }
+
     .action {
       display: flex;
       align-items: center;

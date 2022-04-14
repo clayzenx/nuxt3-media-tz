@@ -1,8 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800');
 
+// media
+$desktop-width: 973px;
+$tablet-width: 660px;
+
 // fonts
 $text: 400 17px/22px "Manrope";
 $title: 700 34px/46px "Manrope";
+$mobile-title: 700 32px/36px "Manrope";
 $logo: 700 20px/24px "Manrope";
 $header-action: 500 14px/12px "Manrope";
 $pagination-link: 700 14px/20px "Manrope";

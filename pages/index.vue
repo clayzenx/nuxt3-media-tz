@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const PAGE_LIMIT = 9;
-let page = ref(1);
+let page = useState('page', () => 1);
 let posts = useState('posts');
 let showPagination = useState('showPagination', () => true);
 
