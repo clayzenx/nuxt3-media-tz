@@ -8,9 +8,8 @@ const parseLinkHeader = (linkHeader: string) => {
   return Object.fromEntries(linkHeadersMap);
 }
 
-export const getPaginationLinks = async (currentPage: number, pageLimit: number) => {
-  const config = useRuntimeConfig();
-  const response = await $fetch.raw(config.API_URL + `posts?_page=${currentPage}&_limit=${pageLimit}`);
+export const getPaginationLinks = async (src: string) => {
+  const response = await $fetch.raw(src);
   return parseLinkHeader(response.headers.get('Link'))
 }
 

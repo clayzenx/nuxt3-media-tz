@@ -5,15 +5,12 @@ const page = usePage();
 const posts = usePosts();
 const showPagination = usePagination();
 
-const { data } = await useFetch(
-  () => `posts?_page=${page.value}&_limit=${PAGE_LIMIT}&_embed=comments`,
-  { baseURL: config.API_URL }
-);
-posts.value = data;
+const req = () => `/posts?_page=${page.value}&_limit=${PAGE_LIMIT}&_embed=comments`;
 
-const lastPageLink: string = (await getPaginationLinks(page.value, PAGE_LIMIT)).last;
-const numOfPages: number = +getPageNumberFromLink(lastPageLink);
+useFetch(req, { baseURL: config.API_URL })
+  .then(({ data }) => posts.value = data);
 
+const numOfPages = await getPageCountFromRequest(`${config.API_URL}${req()}`);
 </script>
 
 <template>

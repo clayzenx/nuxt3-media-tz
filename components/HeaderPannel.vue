@@ -1,12 +1,19 @@
 <script lang="ts" setup>
-const PAGE_LIMIT = 9;
 const config = useRuntimeConfig();
-let searchReq = ref('');
 
-const { data } = await useFetch(() => `posts?q=${searchReq.value}&_embed=comments`, { baseURL: config.API_URL });
+const reqCallback = (req: string) => `/posts?q=${req}&_embed=comments`;
 
+const searchResult = ref(null);
 
 const search = (e: InputEvent) => {
+  let req = (e.target as HTMLInputElement).value;
+  if (req) {
+    fetch(`${config.API_URL}${reqCallback(req)}`)
+      .then(r => r.json())
+      .then(data => searchResult.value = data)
+  } else {
+    searchResult.value = null;
+  }
 }
 </script>
 
@@ -14,6 +21,7 @@ const search = (e: InputEvent) => {
   <div class="header-panel">
     <section>
       <SearchBar @input="search" />
+      <p>{{ searchResult }}</p>
     </section>
     <section class="header-panel__actions">
       <span class="action">
