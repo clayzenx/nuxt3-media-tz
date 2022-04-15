@@ -5,6 +5,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+  color: var.$grey-60;
+}
 body {
   background-color: var.$white;
   font: var.$text;

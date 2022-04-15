@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const emit = defineEmits(['change', 'input'])
+const emit = defineEmits(['change', 'input', 'blur'])
 </script>
 
 <template>
   <div class="search-wrapper">
-    <img class="search-icon" src="search.svg" alt="">
+    <img class="search-icon" src="/search.svg" alt="">
     <input class="search-bar" type="text" placeholder="Поиск" @input="e => emit('input', e)"
-      @change="e => emit('change', e)">
+      @change="e => emit('change', e)" @blur="() => emit('blur')">
   </div>
 </template>
 

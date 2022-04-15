@@ -13,13 +13,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 20px 10px;
 
   @media screen and (max-width: var.$tablet-width) {
     justify-content: center;
     flex-direction: column;
   }
-
 
   &__logo {
     font: var.$logo;

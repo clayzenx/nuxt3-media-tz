@@ -3,7 +3,6 @@ const PAGE_LIMIT = 9;
 const config = useRuntimeConfig();
 const page = usePage();
 const posts = usePosts();
-const showPagination = usePagination();
 
 const req = () => `/posts?_page=${page.value}&_limit=${PAGE_LIMIT}&_embed=comments`;
 
@@ -18,7 +17,7 @@ const numOfPages = await getPageCountFromRequest(`${config.API_URL}${req()}`);
     <PostGrid v-if="posts">
       <Post v-for="post in posts" :post="post" />
     </PostGrid>
-    <Pagination v-if="showPagination" v-model:page="page" :pages="numOfPages" />
+    <Pagination v-model:page="page" :pages="numOfPages" />
   </NuxtLayout>
 </template>
 

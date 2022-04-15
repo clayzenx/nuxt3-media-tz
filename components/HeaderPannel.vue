@@ -1,31 +1,32 @@
 <script lang="ts" setup>
 const config = useRuntimeConfig();
-
-const reqCallback = (req: string) => `/posts?q=${req}&_embed=comments`;
-
+const request = (req: string) => `/posts?q=${req}&_embed=comments`;
 const searchResult = ref(null);
 
 const search = (e: InputEvent) => {
   let req = (e.target as HTMLInputElement).value;
   if (req) {
-    fetch(`${config.API_URL}${reqCallback(req)}`)
+    fetch(`${config.API_URL}${request(req)}`)
       .then(r => r.json())
-      .then(data => searchResult.value = data)
+      .then(data => searchResult.value = data);
   } else {
-    searchResult.value = null;
+    setTimeout(() => {
+      searchResult.value = null;
+    }, 500);
   }
 }
+
 </script>
 
 <template>
   <div class="header-panel">
-    <section>
+    <section class="header-panel__search">
       <SearchBar @input="search" />
-      <p>{{ searchResult }}</p>
+      <SearchResult v-model:searchResult="searchResult" />
     </section>
     <section class="header-panel__actions">
       <span class="action">
-        <img src="grid.svg" alt="">
+        <img src="/grid.svg" alt="">
         <p class="action__text">
           Посты
         </p>
@@ -59,6 +60,10 @@ const search = (e: InputEvent) => {
       font: var.$header-action;
       color: var.$primary;
     }
+  }
+
+  &__search {
+    position: relative;
   }
 }
 </style>

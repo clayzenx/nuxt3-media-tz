@@ -1,31 +1,35 @@
 <script setup lang="ts">
 const { post } = defineProps<{
   post: IPost
-}>()
+}>();
+let url = `/post/${post.id}`;
+
 </script>
 
 <template>
-  <section class="post">
-    <img src="post-preview.svg" class="post__preview" alt="preview">
-    <h3 class="post__title">
-      {{ post.title }}
-    </h3>
-    <p class="post__body">
-      {{ post.body }}
-    </p>
-    <span class="post__icons">
-      <span class="post__icons-comments">
-        <img src="comment.svg" alt="comment-icon">
-        <p>{{ post.comments.length }}</p>
+  <NuxtLink :to="url">
+    <section class="post">
+      <img src="post-preview.svg" class="post__preview" alt="preview">
+      <h3 class="post__title">
+        {{ post.title }}
+      </h3>
+      <p class="post__body">
+        {{ post.body }}
+      </p>
+      <span class="post__icons">
+        <span class="post__icons-comments">
+          <img src="comment.svg" alt="comment-icon">
+          <p>{{ post.comments.length }}</p>
+        </span>
+        <span>
+          <img src="pen.svg" alt="pen">
+        </span>
       </span>
-      <span>
-        <img src="pen.svg" alt="pen">
-      </span>
-    </span>
-  </section>
+    </section>
+  </NuxtLink>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use "@/assets/var";
 
 $card-width: 309px;
