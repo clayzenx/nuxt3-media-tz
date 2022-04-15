@@ -1,22 +1,12 @@
 <script lang="ts" setup>
+const PAGE_LIMIT = 9;
 const config = useRuntimeConfig();
 let searchReq = ref('');
-let posts = useState('posts');
-let showPagination = useState('showPagination');
-
-const initialPosts = posts.value;
 
 const { data } = await useFetch(() => `posts?q=${searchReq.value}&_embed=comments`, { baseURL: config.API_URL });
 
+
 const search = (e: InputEvent) => {
-  showPagination.value = false;
-  if (!(e.target as HTMLInputElement).value) {
-    showPagination.value = true;
-    posts.value = initialPosts;
-  } else {
-    searchReq.value = (e.target as HTMLInputElement).value
-    posts.value = data
-  }
 }
 </script>
 

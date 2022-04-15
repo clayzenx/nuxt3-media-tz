@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:page'])
 
-const { modelValue, pages } = defineProps<{
-  modelValue: number,
+let { page, pages } = defineProps<{
+  page: number,
   pages: number
 }>();
+let current = ref(page);
 
-const currentPage = ref(modelValue);
 const pagination = toRefs(reactive(
   {
     first: [],
@@ -17,40 +17,38 @@ const pagination = toRefs(reactive(
 ));
 
 const generatePagination = () => {
-  let current = currentPage.value;
-  pagination.first.value = [1, 2].filter(num => num < current);
-  pagination.last.value = [pages - 1, pages].filter(num => num > current);
-  pagination.before.value = [current - 2, current - 1].filter(num => num > pagination.first.value[1]);
-  pagination.after.value = [current + 1, current + 2].filter(num => num < pagination.last.value[0]);
+  const cur = current.value
+  pagination.first.value = [1, 2].filter(num => num < cur);
+  pagination.last.value = [pages - 1, pages].filter(num => num > cur);
+  pagination.before.value = [cur - 2, cur - 1].filter(num => num > pagination.first.value[1]);
+  pagination.after.value = [cur + 1, cur + 2].filter(num => num < pagination.last.value[0]);
+
 }
 generatePagination();
 
 const nextPage = () => {
-  let newVal = currentPage.value + 1;
-  if (newVal > pages) return;
-  currentPage.value = newVal;
+  if (current.value + 1 > pages) return;
+  current.value++;
+  emit('update:page', current.value);
   generatePagination();
-  emit('update:modelValue', newVal);
 }
 const prevPage = () => {
-  let newVal = currentPage.value - 1;
-  if (newVal < 1) return;
-  currentPage.value = newVal;
+  if (current.value - 1 < 1) return;
+  current.value--;
+  emit('update:page', current.value);
   generatePagination();
-  emit('update:modelValue', newVal);
 }
 
-const updatePage = (newVal: number) => {
-  currentPage.value = newVal;
+const updatePage = (page: number) => {
+  current.value = page;
+  emit('update:page', current.value);
   generatePagination();
-  emit('update:modelValue', currentPage.value);
 }
 </script>
 
 <template>
   <div class="pagination">
-
-    <PaginationLink :class="{ disable: currentPage - 1 <= 0 }" @click="prevPage">&lt</PaginationLink>
+    <PaginationLink :class="{ disable: page - 1 <= 0 }" @click="prevPage">&lt</PaginationLink>
 
     <PaginationLink v-for='link in pagination.first.value' :key='link' @click="updatePage" :value="link" />
     <PaginationLink class="disable" v-if="pagination.first.value[1] + 1 < pagination.before.value[0]">...
@@ -58,7 +56,7 @@ const updatePage = (newVal: number) => {
     <PaginationLink v-for='link in pagination.before.value' :key='link' @click="updatePage" :value="link" />
 
     <PaginationLink active>
-      {{ currentPage }}
+      {{ page }}
     </PaginationLink>
 
     <PaginationLink v-for='link in pagination.after.value' :key='link' @click="updatePage" :value="link" />
@@ -66,7 +64,7 @@ const updatePage = (newVal: number) => {
     </PaginationLink>
     <PaginationLink v-for='link in pagination.last.value' :key='link' @click="updatePage" :value="link" />
 
-    <PaginationLink :class="{ disable: currentPage + 1 > pages }" @click="nextPage">></PaginationLink>
+    <PaginationLink :class="{ disable: page + 1 > pages }" @click="nextPage">></PaginationLink>
   </div>
 </template>
 

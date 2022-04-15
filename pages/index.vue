@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const config = useRuntimeConfig();
 const PAGE_LIMIT = 9;
-let page = useState('page', () => 1);
-let posts = useState('posts');
-let showPagination = useState('showPagination', () => true);
+const config = useRuntimeConfig();
+const page = usePage();
+const posts = usePosts();
+const showPagination = usePagination();
 
 const { data } = await useFetch(
   () => `posts?_page=${page.value}&_limit=${PAGE_LIMIT}&_embed=comments`,
@@ -21,7 +21,7 @@ const numOfPages: number = +getPageNumberFromLink(lastPageLink);
     <PostGrid v-if="posts">
       <Post v-for="post in posts" :post="post" />
     </PostGrid>
-    <Pagination v-if="showPagination" v-model="page" :pages="numOfPages" />
+    <Pagination v-if="showPagination" v-model:page="page" :pages="numOfPages" />
   </NuxtLayout>
 </template>
 
