@@ -1,4 +1,4 @@
-# Avtormeia-tz
+# Avtormedia-tz
 
 ## Setup
 
