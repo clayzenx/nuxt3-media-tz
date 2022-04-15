@@ -25,12 +25,12 @@ const search = (e: InputEvent) => {
       <SearchResult v-model:searchResult="searchResult" />
     </section>
     <section class="header-panel__actions">
-      <span class="action">
+      <NuxtLink to="/" class="action">
         <img src="/grid.svg" alt="">
         <p class="action__text">
           Посты
         </p>
-      </span>
+      </NuxtLink>
     </section>
   </div>
 </template>
